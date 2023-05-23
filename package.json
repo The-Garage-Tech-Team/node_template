@@ -16,8 +16,8 @@
   },
   "scripts": {
     "dev": "nodemon -r dotenv/config src/index.ts | pino-colada",
-    "build": "tsc",
-    "start": "node build/index.js"
+    "build": "rm -rf dist && tsc",
+    "start": "node ./dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.2.1",
