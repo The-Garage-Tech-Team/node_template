@@ -51,7 +51,7 @@ server.register(fastifyAutoload, {
   dir: join(__dirname, 'routes'),
 });
 
-const port: any = process.env.PORT ?? process.env.$PORT ?? 3002;
+const port: any = process.env.PORT ?? process.env.$PORT ?? 8080;
 
 export function listen() {
   server
