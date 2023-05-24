@@ -25,6 +25,7 @@
     "nodemon": "^2.0.22",
     "pino": "^8.14.1",
     "pino-colada": "^2.2.2",
+    "prisma": "^4.14.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
