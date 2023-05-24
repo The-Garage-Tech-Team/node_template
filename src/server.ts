@@ -57,7 +57,6 @@ export function listen() {
   server
     .listen({
       port: port,
-      host: '0.0.0.0',
     })
     .catch((err) => {
       server.log.error(err);
