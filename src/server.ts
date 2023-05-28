@@ -41,7 +41,7 @@ server.register(fastifySwagger, {
   }
 });
 const swaggerUiOptions = {
-  routePrefix: "/docs",
+  routePrefix: "/",
   exposeRoute: true,
 };
 

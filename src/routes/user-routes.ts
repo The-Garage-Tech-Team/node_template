@@ -6,13 +6,26 @@ import { Type } from '@fastify/type-provider-typebox';
 export default async (server: FastifyInstance) => {
     server.route({
         method: 'POST',
-        url: '/user',
+        url: '/userRegister',
         schema: {
-            summary: 'add user',
+            summary: 'user signup',
             tags: ['user'],
             body: Users,
         },
-        handler: controller.addUser
+        handler: controller.Register
+    });
+    server.route({
+        method: 'POST',
+        url: '/userLogin',
+        schema: {
+            summary: 'user login',
+            tags: ['user'],
+            body: Type.Object({
+                email: Type.String(),
+                password: Type.String(),
+            }),
+        },
+        handler: controller.Login
     });
     server.route({
         method: 'GET',
