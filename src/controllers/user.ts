@@ -11,21 +11,30 @@ export const Register = async (
   const SALT = process.env.SALT;
 
   const hashedPassword = await bcrypt.hash(user.password, Number(SALT));
-  return await 
-   prismaClient.user
-    .create({
-      data: {
-        ...user,
-        password: hashedPassword,
-        email: user.email.toLocaleLowerCase(),
+  return await prismaClient.user
+    .findUnique({
+      where: {
+        email: user.email.toLowerCase(),
       },
     })
-    .then((User) => {
-      if (User.email === user.email) {
-        return "Email Already Registered";
-      } else return reply.send(User);
+    .then((users) => {
+      if (users) {
+        reply.send("user already exists");
+      } else {
+        return prismaClient.user
+          .create({
+            data: {
+              ...user,
+              password: hashedPassword,
+              email: user.email.toLowerCase(),
+            },
+          })
+          .then(() => {
+            reply.send("Registered");
+          });
+      }
     });
-};
+}
 export const Login = async (request: FastifyRequest, reply: FastifyReply) => {
   const user = request.body as Users;
   return await prismaClient.user
