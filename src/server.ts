@@ -1,54 +1,59 @@
-import fastify from 'fastify'
-import fastifyAutoload from '@fastify/autoload';
-import fastifySensible from '@fastify/sensible';
-import fastifySwagger from '@fastify/swagger';
+import fastify from "fastify";
+import fastifyAutoload from "@fastify/autoload";
+import fastifySensible from "@fastify/sensible";
+import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { join } from 'path';
+import jwt from "@fastify/jwt";
+import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { join } from "path";
 
 export const server = fastify({
   logger: true,
   ajv: {
     customOptions: {
-      removeAdditional: 'all',
+      removeAdditional: "all",
       ownProperties: true,
     },
-  }
+  },
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 server.register(fastifySwagger, {
-  mode: 'dynamic',
+  mode: "dynamic",
   openapi: {
     info: {
-      title: 'node template',
-      description: 'Testing the Fastify swagger API',
-      version: '0.1.0'
+      title: "node template",
+      description: "Testing the Fastify swagger API",
+      version: "0.1.0",
     },
-    // security: [
-    // 	{
-    // 		bearerAuth: [],
-    // 	},
-    // ],
-    // components:{
-    //   securitySchemes:{
-    //     bearerAuth: {
-    // 			type: 'http',
-    // 			scheme: 'bearer',
-    // 			bearerFormat: 'JWT',
-    // 		},
-    //   }
-    // }
-  }
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+  },
 });
 const swaggerUiOptions = {
-  routePrefix: "/docs",
+  routePrefix: "/",
   exposeRoute: true,
 };
+const SeCKey = process.env.SeCKey;
 
+server.register(jwt, {
+  secret: SeCKey,
+});
 server.register(fastifySensible);
 server.register(fastifySwaggerUi, swaggerUiOptions);
 server.register(fastifyAutoload, {
-  dir: join(__dirname, 'routes'),
+  dir: join(__dirname, "routes"),
 });
 
 const port: any = process.env.PORT ?? process.env.$PORT ?? 8080;
