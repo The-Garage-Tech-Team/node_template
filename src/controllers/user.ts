@@ -34,7 +34,7 @@ export const Register = async (
           });
       }
     });
-};
+}
 export const Login = async (request: FastifyRequest, reply: FastifyReply) => {
   const user = request.body as Users;
   return await prismaClient.user
