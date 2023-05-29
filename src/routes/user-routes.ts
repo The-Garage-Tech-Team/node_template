@@ -39,4 +39,61 @@ export default async (server: FastifyInstance) => {
     },
     handler: controller.getUser,
   });
+
+  server.route({
+    method: "GET",
+    url: "/api/activate/user/:hash",
+    schema: {
+      summary: "user Activate",
+      tags: ["user"],
+     
+    },
+    handler: controller.findUser,
+  });
+
+  server.route({
+    method: "POST",
+    url: "/ForgetPassword",
+    schema: {
+      summary: "ForgetPassword",
+      tags: ["user"],
+      body: Type.Object({
+        email: Type.String(),
+
+      }),
+    },
+    handler: controller.sendMail,
+  });
+
+
+  server.route({
+    method: "POST",
+    url: "/verifyOTP/:email",
+    schema: {
+      summary: "verifyOTP",
+      tags: ["user"],
+      body: Type.Object({
+        otp: Type.String(),
+
+      }),
+    },
+    handler: controller.verifyOTP,
+  });
+
+
+  server.route({
+    method: "PUT",
+    url: "/resetPassword/:id",
+    schema: {
+      summary: "resetPassword",
+      tags: ["user"],
+      body: Type.Object({
+        password: Type.String(),
+
+      }),
+    },
+    handler: controller.resetPassword,
+  });
 };
+
+
