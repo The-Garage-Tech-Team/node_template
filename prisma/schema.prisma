@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-    user_id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
     email        String   @unique
     registeredAt DateTime @default(now())
     name         String
     password     String
     mobile       Int
-    isActive     Boolean @default(false)
+    isActive     Boolean  @default(false)
 
     @@map("users")
 }
