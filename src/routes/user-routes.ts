@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { Users } from "../type-object/user-type";
 import * as controller from "../controllers";
 import { Type } from "@fastify/type-provider-typebox";
-
+import {authentication} from '../middleware/auth'
 export default async (server: FastifyInstance) => {
   server.route({
     method: "POST",
@@ -12,7 +12,7 @@ export default async (server: FastifyInstance) => {
       tags: ["user"],
       body: Users,
     },
-    handler: controller.Register,
+    handler:  controller.Register,
   });
   server.route({
     method: "POST",
@@ -92,7 +92,11 @@ export default async (server: FastifyInstance) => {
 
       }),
     },
-    handler: controller.resetPassword,
+    preHandler:authentication,
+
+    handler:
+  controller.resetPassword
+     ,
   });
 };
 

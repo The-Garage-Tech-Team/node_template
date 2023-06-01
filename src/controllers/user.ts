@@ -76,6 +76,7 @@ export const Login = async (request: FastifyRequest, reply: FastifyReply) => {
         id: User.user_id,
         token,
       };
+    
       if (!User) {
         reply.send("user not found");
       }

@@ -16,6 +16,7 @@
     "@sinclair/typebox": "^0.28.11",
     "bcrypt": "^5.1.0",
     "fastify": "^4.17.0",
+    "jsonwebtoken": "^9.0.0",
     "nodemailer": "^6.9.3"
   },
   "scripts": {
