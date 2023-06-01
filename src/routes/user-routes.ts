@@ -2,7 +2,12 @@ import { FastifyInstance } from "fastify";
 import { Users } from "../type-object/user-type";
 import * as controller from "../controllers";
 import { Type } from "@fastify/type-provider-typebox";
+
 import {authentication} from '../middleware/auth'
+
+import { userInfo } from "os";
+
+
 export default async (server: FastifyInstance) => {
   server.route({
     method: "POST",
@@ -20,12 +25,39 @@ export default async (server: FastifyInstance) => {
     schema: {
       summary: "user login",
       tags: ["user"],
-      body: Type.Object({
+      body: {
         email: Type.String(),
         password: Type.String(),
-      }),
+      },
     },
     handler: controller.Login,
+  });
+  server.route({
+    method: "PUT",
+    url: "/editProfile/:id",
+    schema: {
+      summary: "Edit user profile",
+      tags: ["user"],
+      body: {
+        email: Type.Optional(Type.String()),
+        mobile: Type.Optional(Type.Integer()),
+        name: Type.Optional(Type.String()),
+      },
+    },
+    handler: controller.editProfile,
+  });
+  server.route({
+    method: "PUT",
+    url: "/editPassword/:id",
+    schema: {
+      summary: "Edit user profile",
+      tags: ["user"],
+      body: {
+        password: Type.Optional(Type.String()),
+        oldPassword: Type.Optional(Type.String()),
+      },
+    },
+    handler: controller.editPassword,
   });
   server.route({
     method: "GET",
