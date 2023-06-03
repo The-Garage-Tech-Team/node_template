@@ -41,6 +41,7 @@ server.register(fastifySwagger, {
     },
   },
 });
+
 const swaggerUiOptions = {
   routePrefix: "/",
   exposeRoute: true,
@@ -50,6 +51,9 @@ const SeCKey = process.env.SeCKey;
 server.register(jwt, {
   secret: SeCKey,
 });
+
+
+
 server.register(fastifySensible);
 server.register(fastifySwaggerUi, swaggerUiOptions);
 server.register(fastifyAutoload, {
