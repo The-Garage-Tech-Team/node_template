@@ -2,7 +2,8 @@ import { FastifyInstance } from "fastify";
 import { Users } from "../type-object/user-type";
 import * as controller from "../controllers";
 import { Type } from "@fastify/type-provider-typebox";
-import { userInfo } from "os";
+import { request } from "http";
+import { authentication } from "../hooks/auth";
 
 export default async (server: FastifyInstance) => {
   server.route({
@@ -13,6 +14,7 @@ export default async (server: FastifyInstance) => {
       tags: ["user"],
       body: Users,
     },
+
     handler: controller.Register,
   });
   server.route({
@@ -46,25 +48,25 @@ export default async (server: FastifyInstance) => {
     method: "PUT",
     url: "/editPassword/:id",
     schema: {
-      summary: "Edit user profile",
+      summary: "Edit user password",
       tags: ["user"],
       body: {
         password: Type.Optional(Type.String()),
         oldPassword: Type.Optional(Type.String()),
       },
     },
+
     handler: controller.editPassword,
   });
+
   server.route({
     method: "GET",
     url: "/users",
     schema: {
       summary: "get user",
       tags: ["user"],
-      response: {
-        "2xx": Type.Array(Users),
-      },
     },
+    onRequest: authentication.authenticate,
     handler: controller.getUser,
   });
 
@@ -74,8 +76,8 @@ export default async (server: FastifyInstance) => {
     schema: {
       summary: "user Activate",
       tags: ["user"],
-     
     },
+
     handler: controller.findUser,
   });
 
@@ -87,12 +89,10 @@ export default async (server: FastifyInstance) => {
       tags: ["user"],
       body: Type.Object({
         email: Type.String(),
-
       }),
     },
     handler: controller.sendMail,
   });
-
 
   server.route({
     method: "POST",
@@ -102,12 +102,10 @@ export default async (server: FastifyInstance) => {
       tags: ["user"],
       body: Type.Object({
         otp: Type.String(),
-
       }),
     },
     handler: controller.verifyOTP,
   });
-
 
   server.route({
     method: "PUT",
@@ -117,11 +115,8 @@ export default async (server: FastifyInstance) => {
       tags: ["user"],
       body: Type.Object({
         password: Type.String(),
-
       }),
     },
     handler: controller.resetPassword,
   });
 };
-
-

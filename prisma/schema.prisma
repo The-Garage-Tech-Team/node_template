@@ -14,9 +14,8 @@ model User {
     name         String
     password     String
     mobile       Int
-    isActive     Boolean @default(false)
-    otp         Int  @default(null)
-
+    isActive     Boolean  @default(false)
+    otp          Int      @default(0)
 
     @@map("users")
 }
