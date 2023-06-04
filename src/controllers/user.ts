@@ -2,7 +2,6 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { prismaClient } from "../prisma";
 import { Users } from "../type-object/user-type";
 import * as bcrypt from "bcrypt";
-import { userInfo } from "os";
 
 const SALT = process.env.SALT;
 
@@ -72,6 +71,7 @@ export const Login = async (request: FastifyRequest, reply: FastifyReply) => {
   const token = await reply.jwtSign(
     {
       id: User.id,
+      role: User.role,
     },
     { expiresIn: "2h" }
   );
@@ -184,6 +184,7 @@ export const resetPassword = async (req, res) => {
 };
 
 export const getUser = async (request: FastifyRequest, reply: FastifyReply) => {
+  const name = request.headers.name;
   const user = await prismaClient.user.findMany();
 
   return user;
