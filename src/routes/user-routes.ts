@@ -2,8 +2,8 @@ import { FastifyInstance } from "fastify";
 import { Users } from "../type-object/user-type";
 import * as controller from "../controllers";
 import { Type } from "@fastify/type-provider-typebox";
-import { request } from "http";
-import { authentication } from "../hooks/auth";
+import { authorization } from "../hooks/auth";
+("../hooks/auth");
 
 export default async (server: FastifyInstance) => {
   server.route({
@@ -66,7 +66,7 @@ export default async (server: FastifyInstance) => {
       summary: "get user",
       tags: ["user"],
     },
-    onRequest: authentication.authenticate,
+    onRequest: authorization.authorization,
     handler: controller.getUser,
   });
 
