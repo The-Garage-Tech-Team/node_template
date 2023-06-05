@@ -1,12 +1,11 @@
-import jwt from "@fastify/jwt";
-import fastifyJwt from "@fastify/jwt";
+import { VerifyOptions } from "@fastify/jwt";
+import { FastifyRequest, FastifyReply, } from "fastify";
+
 const fastify = require("fastify")();
-// const jwt = require("@fastify/jwt");
-const fp = require("fastify-plugin");
 
 export const authentication = fastify.decorate(
   "authenticate",
-  async function (request, reply) {
+  async function (request:FastifyRequest, reply:FastifyReply) {
     try {
       await request.jwtVerify();
     } catch (err) {
@@ -14,11 +13,12 @@ export const authentication = fastify.decorate(
     }
   }
 );
+
 export const authorization = fastify.decorate(
   "authorization",
-  async function (request, reply) {
-    const auth = request.headers.authorization;
-    const token = auth.split(" ")[1];
+  async function (request: FastifyRequest, reply: FastifyReply) {
+    const token = request.headers.authorization.split(" ")[1] as Partial<VerifyOptions>;
+
     await request.jwtVerify(token, (err, decoded) => {
       if (err) reply.send(err);
       if (decoded.role == "admin") return;

@@ -17,6 +17,18 @@ model User {
     isActive     Boolean  @default(false)
     role         String   @default("user")
     otp          Int      @default(0)
+    Post         Post[]
+    isDel        Boolean  @default(false)
 
     @@map("users")
+}
+
+model Post {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    createdAt   DateTime @default(now())
+    isDel       Boolean  @default(false)
+    description String
+    authorId    String   @db.ObjectId
+    author      User     @relation(fields: [authorId], references: [id])
 }
