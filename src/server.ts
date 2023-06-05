@@ -52,8 +52,6 @@ server.register(jwt, {
   secret: SeCKey,
 });
 
-
-
 server.register(fastifySensible);
 server.register(fastifySwaggerUi, swaggerUiOptions);
 server.register(fastifyAutoload, {
