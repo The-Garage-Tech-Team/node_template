@@ -1,18 +1,18 @@
 import { FastifyInstance } from "fastify";
-import { addPost } from "../controllers/post";
+import {add_commentes } from "../controllers/commentes";
 import { authentication } from '../hooks/auth';
-import { Post } from "../type-object/post-type";
+import { Commentes } from "../type-object/commentes-type";
 export default async (server: FastifyInstance) => {
+
   server.route({
     method: "POST",
-    url: "/addPost",
+    url: "/addcomment/:id",
     schema: {
-      summary: "Post",
-      tags: ["post"],
-      body: Post,
+      summary: "Commentes",
+      tags: ["commentes"],
+      body: Commentes,
     },
     onRequest: authentication.authenticate,
-    handler: addPost,
+    handler: add_commentes,
   });
-
 };
