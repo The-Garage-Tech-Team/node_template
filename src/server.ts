@@ -6,6 +6,8 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import jwt from "@fastify/jwt";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { join } from "path";
+import fileUpload from "fastify-file-upload";
+import { FastifyReply } from "fastify";
 
 export const server = fastify({
   logger: true,
@@ -51,7 +53,7 @@ const SeCKey = process.env.SeCKey;
 server.register(jwt, {
   secret: SeCKey,
 });
-
+server.register(fileUpload);
 server.register(fastifySensible);
 server.register(fastifySwaggerUi, swaggerUiOptions);
 server.register(fastifyAutoload, {

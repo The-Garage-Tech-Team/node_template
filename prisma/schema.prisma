@@ -8,41 +8,40 @@ datasource db {
 }
 
 model User {
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    email        String   @unique
-    registeredAt DateTime @default(now())
+    id           String      @id @default(auto()) @map("_id") @db.ObjectId
+    email        String      @unique
+    registeredAt DateTime    @default(now())
     name         String
     password     String
     mobile       Int
-    isActive     Boolean  @default(false)
-    role         String   @default("user")
-    otp          Int      @default(0)
+    isActive     Boolean     @default(false)
+    role         String      @default("user")
+    otp          Int         @default(0)
     Post         Post[]
     Commentes    Commentes[]
 
-    isDel        Boolean  @default(false)
+    isDel Boolean @default(false)
 
     @@map("users")
 }
 
 model Post {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    id          String      @id @default(auto()) @map("_id") @db.ObjectId
     title       String?
-    createdAt   DateTime @default(now())
-    isDel       Boolean  @default(false)
+    file        String?
+    createdAt   DateTime    @default(now())
+    isDel       Boolean     @default(false)
     description String
-    authorId    String   @db.ObjectId
-    Commentes    Commentes[]
-    author      User     @relation(fields: [authorId], references: [id])
-
+    authorId    String      @db.ObjectId
+    Commentes   Commentes[]
+    author      User        @relation(fields: [authorId], references: [id])
 }
 
 model Commentes {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  commentes String
-postId  String @db.ObjectId
-post    Post   @relation(fields: [postId], references: [id])
-userId  String   @db.ObjectId
-userCommented     User     @relation(fields: [userId], references: [id])
-
+    id            String @id @default(auto()) @map("_id") @db.ObjectId
+    commentes     String
+    postId        String @db.ObjectId
+    post          Post   @relation(fields: [postId], references: [id])
+    userId        String @db.ObjectId
+    userCommented User   @relation(fields: [userId], references: [id])
 }
