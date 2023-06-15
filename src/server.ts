@@ -6,8 +6,8 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import jwt from "@fastify/jwt";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import path, { join } from "path";
+import fastifyStatic from "@fastify/static";
 import fileUpload from "fastify-file-upload";
-const fastifyStatic = require('@fastify/static')
 export const server = fastify({
   logger: true,
   ajv: {
@@ -53,10 +53,13 @@ server.register(jwt, {
   secret: SeCKey,
 });
 server.register(fastifyStatic, {
-  root: path.join(__dirname, '../uploads'),
-  prefix: '/uploads/',
-})
+  root: path.join(__dirname, "../uploads"),
+  prefix: "/uploads/",
+});
+
 server.register(fileUpload);
+// server.register(fastifyPost)
+
 server.register(fastifySensible);
 server.register(fastifySwaggerUi, swaggerUiOptions);
 server.register(fastifyAutoload, {

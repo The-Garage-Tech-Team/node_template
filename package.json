@@ -7,6 +7,7 @@
   "dependencies": {
     "@fastify/autoload": "^5.7.1",
     "@fastify/jwt": "^7.0.0",
+    "@fastify/multipart": "^7.6.0",
     "@fastify/sensible": "^5.2.0",
     "@fastify/static": "^6.10.2",
     "@fastify/swagger": "^8.4.0",
@@ -19,6 +20,7 @@
     "bson": "^5.3.0",
     "fastify": "^4.17.0",
     "fastify-file-upload": "^4.0.0",
+    "multiparty": "^4.2.3",
     "nodemailer": "^6.9.3"
   },
   "scripts": {
@@ -28,7 +30,8 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
-    "@types/node": "^20.2.1",
+    "@types/busboy": "^1.5.0",
+    "@types/node": "^20.3.1",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
     "pino": "^8.14.1",
